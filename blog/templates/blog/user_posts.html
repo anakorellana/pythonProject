@@ -1,0 +1,112 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+    <h1 class="mb-3"> Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    <!-- Home Section -->
+    {% for post in posts %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+              <div class="row">
+                  <div class="col-md-2 width:fit-content">
+                      <img alt="author" class="article-img rounded-circle" src="{{ post.author.profile.image.url}}">
+                  </div>
+                  <div class="col-md-9">
+                          <a class="mr-1" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                          <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+
+                      <p class="article-content">{{ post.snippet|safe }}</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+      </article>
+  {% endfor %}
+  {% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.has_previous_page_number }}">Previous</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+     {% if page_obj.number == num %}
+        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
+         <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+     {% endif %}
+  {% endfor %}
+
+ {% if page_obj.has_next %}
+     <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+     <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+
+  {% endif %}
+{% endif %}
+
+
+
+<!-- /featured post -->
+
+<section>
+  <div class="card-group" style="width: 50rem; ">
+  <div class="container-fluid p-sm-0">
+    <div class="row featured-post-slider">
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/deesierto.jpg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:50px;">Running & Hikes</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">Desierto de los Leones</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/pottery2.jpg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:55px;">Spirituality</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">On Brokeness</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/floreslana.jpg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:55px;">Travel</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">Colors of Oaxaca</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/science.jpeg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:25px;">Podcasts</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">ScienceVS Magic Mushrooms</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+

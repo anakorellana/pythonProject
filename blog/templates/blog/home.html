@@ -1,0 +1,346 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" xmlns="http://www.w3.org/1999/html">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" style="height: 550px; padding-top: 20px;" src="static/blog/images/picodia1.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        <p class="one"> HIKES & NATURE </p>
+        <div class="home-title">
+          <h2> My Journey to<br> El Pico de Orizaba.</h2>
+           <br>
+          <h4><a class="mainpictures" href="{% url 'post-detail' 1 %}"> Read More...</a></h4>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" style="height: 550px; padding-top: 20px;" src="static/blog/images/coloresoaxaca.jpg" alt="Second slide">
+      <div class="carousel-caption d-none d-md-block">
+        <p class="one"> TRAVEL </p>
+        <div class="home-title">
+          <h2>OAXACA'S <br>Charming Colors </h2>
+          <br>
+          <h4> Coming Soon...</h4>
+        </div>
+      </div>
+
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" style="height: 550px; padding-top: 20px;" src="static/blog/images/estrellas.jpg" alt="Third slide">
+      <div class="carousel-caption d-none d-md-block">
+        <p class="one"> SUNDAY'S  </p>
+        <div class="home-title">
+          <h2>On Brokeness<br> </h2>
+          <br>
+          <h4> Coming Soon...</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Home Section -->
+
+{% for post in posts %}
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mb-100">
+        <article data-target="article" class="article-full-width {% if forloop.counter|divisibleby:2 %} article-right{% endif %}">
+          <div class="post-image">
+<!--            {% if post.image %}-->
+            <img class="img-fluid" src="{{ post.image.url }}" alt="post-thumb">
+<!--            {% endif %}-->
+           </div>
+          <div class="post-content">
+            <ul class="list-inline d-flex justify-content-between border-bottom post-meta pb-2 mb-4">
+              <li class="list-inline-item"><i class="fa fa-calendar" aria-hidden="true"></i> <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small></li>
+              <li class="list-inline-item"><i class="ti-alarm-clock mr-2"></i><a class="mr-1" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a></li>
+            </ul>
+            <h4 class="mb-4"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+            <p class="mb-0 post-summary">{{ post.snippet|safe }}</p>
+            <a class="btn btn-transparent mb-4" href="{% url 'post-detail' post.id %}">Continue...</a>
+          </div>
+        </article>
+      </div>
+      </div>
+    </div>
+</section>
+
+   {% endfor %}
+
+
+ <!-- Pagination -->
+  {% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-black mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-black mb-4" href="?page={{ page_obj.has_previous_page_number }}">Previous</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+     {% if page_obj.number == num %}
+        <a class="btn btn-black mb-4" href="?page={{ num }}">{{ num }}</a>
+     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
+         <a class="btn btn-outline-black mb-4" href="?page={{ num }}">{{ num }}</a>
+     {% endif %}
+  {% endfor %}
+
+ {% if page_obj.has_next %}
+     <a class="btn btn-outline-black mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+     <a class="btn btn-outline-black mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+
+  {% endif %}
+{% endif %}
+
+
+<div class="container4">
+  <div class="box1">
+    <div class="content4">
+      <div>
+      <h3 style="display:inline; font-family: 'Playfair Display', serif;"> Featuring on the </h3><h2 style="display:inline;"><div class="main">
+	<span>B</span>
+	<span>L</span>
+	<span class="letter"></span>
+	<span>G</span>
+</div></h2>
+    </div>
+  </div>
+</div>
+
+ <!-- Bottom Articles  -->
+
+<div class="container3">
+  <div class="box">
+    <br>
+    <div class="icon"><h5 class="article-title1">Podcasts Science</h5></div>
+    <div class="content">
+      <img class="boxcards" src="/static/blog/images/science.jpeg" alt="Card image cap">
+      <br>
+      <p style="font-weight: bold;"></p> Magic Mushrooms and Depression?
+
+      <p class="text-center"> Link to the podcast at the top of the article and some stats about depression worldwide.</p>
+      <hr class="boxes">
+      <small class="text-muted"><a class="boxbottom" href="{% url 'post-detail' 12 %}">READ
+        MORE...</a></small>
+    </div>
+  </div>
+  <div class="box">
+    <br>
+    <div class="icon"><h5 class="article-title1">Sundays'</h5></div>
+    <div class="content">
+      <img class="boxcards" src="/static/blog/images/kin2.jpg" alt="Card image cap">
+      <br>
+      <p style="font-weight: bold;"></p>On Brokeness
+      <p> What is the first thought that comes to your mind when a piece of pottery or glass breaks?
+
+      </p>
+      <hr class="boxes">
+      <small class="text-muted"><a class="boxbottom" href="#"> Coming Soon...</a></small>
+    </div>
+  </div>
+  <div class="box">
+    <br>
+    <div class="icon"><h5 class="article-title1">Travel </h5></div>
+    <div class="content">
+      <img class="boxcards" src="/static/blog/images/tulum.jpg" alt="Card image cap">
+      <br>
+      <p style="font-weight: bold;"></p>Four Days in Yucatan <span> and Quintana Roo!</span>
+      <p>Mayan architecture, turquoise water, and cochinita!
+      </p>
+     <hr class="boxes">
+      <small class="text-muted"><a class="boxbottom" href="#">Coming Soon...</a></small>
+    </div>
+  </div>
+
+</div>
+
+    <br>
+   <br>
+   <br>
+   <br>
+
+
+  {% endblock content %}
+
+
+
+
+
+
+<!--
+<br>
+<br>
+<div class="card-group">
+<div class="col-1">
+</div>
+
+  <div class="card col-3">
+    <img class="card-img-top" src="/static/blog/images/kin2.JPG" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="article-title1">On Brokeness </h5>
+      <p> " Golden Repair " or Kintsugui it's a Japanese technique to repair broken pottery with powdered silver,golden,
+        or platinum making the cracks that it suffered more visible as way to depict its repair and history. As we go through life, we also experience being broken at times.
+        But what do we do with those broken pieces?
+
+         <a class="btn btn-transparent mb-4" href="#">Coming soon...</a>
+      </p>
+      <p><small class="text-muted articles-cont"> SUNDAY'S</small></p>
+    </div>
+  </div>
+  <div class="card col-3">
+    <img class="card-img-top" src="/static/blog/images/merida.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="article-title1"> Four Days in Yucatan <span> and Quintana Roo!</span></h5>
+      <p class="card-text"> Yucatan has two beautiful cities built by the Mayans with some Toltec
+        influence as well. It is still a mistery how the Mayan civilization vanished until this day since the Mayan codices got destroyed
+        by the Spanish. Fortunately, today we can appreciate the history and architecture as well as the breathtaking beaches and
+        traditional food these two areas have to offer!
+
+      </p>
+      <a class="btn btn-transparent mb-4" href="#">Coming soon...</a>
+      <p class="articles-cont"><small class="text-muted">TRAVEL</small></p>
+    </div>
+  </div>
+
+  <div class="card col-3">
+    <img class="card-img-top" src="/static/blog/images/science.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="article-title1"> Magic Mushrooms and Depression? </h5>
+      <p class="text-center"> Would it be possible that one substance such as Mushrooms can
+        Miraculously cure depression, anxiety and eating disorders? You can find out more on this Podcast Science
+        VS by Kelly Zuckerman! </p>
+
+        <a class="btn btn-transparent mb-4" href="{% url 'blog-science' %}">Continue...</a>
+
+      <p class="articles-cont"><small class="text-muted">PODCASTS, SCIENCE</small></p>
+
+
+    </div>
+  </div>
+  <div class="col-1">
+</div>
+</div>
+
+
+
+
+<br>
+<br>
+<br>
+
+
+
+<div class="container2">
+    <div class="box">
+        <div class="icon">01</div>
+        <div class="content">
+            <h3>Service Name</h3>
+            <p>lorem industry. Lorem Ipsum has been
+                the industry's standard dummy text ever since
+                the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the
+                leap into electronic</p>
+            <a href="#">Read More</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="icon">2</div>
+        <div class="content">
+            <h3>Service Name</h3>
+            <p>lorem industry. Lorem Ipsum has been
+                the industry's standard dummy text ever since
+                the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the
+                leap into electronic</p>
+            <a class="boxbottom" href="#">Read More</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="icon">3</div>
+        <div class="content">
+            <h3>Service Name</h3>
+            <p>lorem industry. Lorem Ipsum has been
+                the industry's standard dummy text ever since
+                the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the
+                leap into electronic</p>
+            <a href="#">Read More</a>
+        </div>
+    </div>
+</div>
+-->
+
+
+
+
+
+
+
+<!-- /featured post -->
+
+<!--
+<section>
+  <div class="card-group" style="width: 50rem; ">
+  <div class="container-fluid p-sm-0">
+    <div class="row featured-post-slider">
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/deesierto.jpg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:50px;">Running & Hikes</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">Desierto de los Leones</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/pottery2.jpg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:55px;">Spirituality</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">On Brokeness</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/floreslana.jpg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:55px;">Travel</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">Colors of Oaxaca</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
+        <article class="card bg-dark text-center text-white border-0 rounded-0">
+          <img class="card-img rounded-0 img-fluid w-100" src="static/blog/images/science.jpeg" alt="post-thumb">
+          <div class="card-img-overlay">
+            <div class="card-content">
+              <p class="text-uppercase" style="margin-bottom:25px;">Podcasts</p>
+              <div class="card-title2 mb-4"><a class="text-white" href="blog-single.html">ScienceVS Magic Mushrooms</a></div>
+              <a class="btn btn-outline-light" href="#">read more</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+-->
+
+
