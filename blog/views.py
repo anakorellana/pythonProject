@@ -71,6 +71,7 @@ class PostCommentView(CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ["title", "content", "image", "snippet"]
+    template_name = ('blog/post_update.html')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
